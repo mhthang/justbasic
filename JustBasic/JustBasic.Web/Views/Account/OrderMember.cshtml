@@ -1,0 +1,62 @@
+﻿@model IEnumerable<JustBasic.Web.Models.OrderViewModel>
+@using System.Globalization;
+@{
+    ViewBag.Title = "Thông tin đơn hàng";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+    CultureInfo cul = new CultureInfo("vi-vn");
+}
+<style>
+    h3.title {
+        padding: 10px;
+        margin: 0px;
+        background: #dddddd;
+        color: #f7a82f;
+    }
+</style>
+<div class="row">
+    <div class="col-md-3">
+        @Html.Partial("_MenuMember")
+    </div>
+    <div class="col-md-9">
+        <h3 class="title">Thông tin đơn hàng</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <tr style="text-align:center;font-weight:bold;">
+                    <td>Mã đơn hàng</td>
+                    <td>Tổng SL đặt</td>
+                    <td>Tiền thanh toán</td>
+                    <td>Tiền giảm giá</td>
+                    <td>Thành tiền</td>
+                    <td>#</td>
+                </tr>
+                @{
+                    foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    @order.ID
+                                </a>
+                            </td>
+                            <td align="right">
+                                @order.OrderDetails.Sum(x => x.Quantity)
+                            </td>
+                            <td align="right">
+                                @double.Parse(order.TotalAmount.ToString()).ToString("#,###", cul.NumberFormat).Replace(",", "-").Replace(".", ",").Replace("-", ".")
+                            </td>
+                            <td align="right">
+                                @double.Parse(order.TotalDiscount == null ? "0" : order.TotalDiscount.ToString()).ToString("#,###", cul.NumberFormat).Replace(",", "-").Replace(".", ",").Replace("-", ".")
+                            </td>
+                            <td align="right">
+                                @double.Parse((order.TotalAmount - order.TotalDiscount) == null ? "0" : (order.TotalAmount - order.TotalDiscount).ToString()).ToString("#,###", cul.NumberFormat).Replace(",", "-").Replace(".", ",").Replace("-", ".")
+                            </td>
+                            <td>
+                                <a href="#">Chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

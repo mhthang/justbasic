@@ -1,0 +1,131 @@
+﻿@model JustBasic.Web.Models.LoginViewModel
+@{
+    ViewBag.Title = "Tài khoản";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+}
+
+@*<div class="account_grid">
+        <div class="login-right">
+            <h3>Đăng nhập</h3>
+            @using (Html.BeginForm("Login", "Account", new { returnUrl = @ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+                @Html.ValidationSummary(false, "", new { @class = "error" })
+                <div>
+                    <span>Tài khoản<label>*</label></span>
+                    @Html.TextBoxFor(model => model.UserName)
+                </div>
+                <div>
+                    <span>Password<label>*</label></span>
+                    @Html.PasswordFor(model => model.Password)
+                </div>
+                <div>
+                    @Html.CheckBoxFor(model => model.RememberMe)
+                    Nhớ mật khẩu?
+                </div>
+                @*<a class="forgot" href="#">Forgot Your Password?</a>
+                <input type="submit" value="Đăng nhập">
+
+
+            }
+
+            @Html.Partial("_ExternalLoginsListPartial", new JustBasic.Web.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
+
+        </div>
+        <div class="login-left">
+            <h3>Chưa có tài khoản</h3>
+            <p>Nếu bạn chưa có tài khoản vui lòng đăng ký tại link dưới đây:</p>
+            <a class="acount-btn" href="/dang-ky.html">Đăng ký thành viên</a>
+        </div>
+        <div class="clearfix"> </div>
+    </div>*@
+
+
+<div id="layout-page" class="bgfafafa">
+    <div class="container">
+        <div id="customer-login">
+            <div id="login" class="userbox">
+                <h1>Đăng nhập</h1>
+                @using (Html.BeginForm("Login", "Account", new { returnUrl = @ViewBag.ReturnUrl }, FormMethod.Post))
+                {
+                    @Html.ValidationSummary(false, "", new { @class = "error" })
+                    <div>
+                        <span>Tài khoản<label>*</label></span>
+                        @Html.TextBoxFor(model => model.UserName)
+                    </div>
+                    <div>
+                        <span>Password<label>*</label></span>
+                        @Html.PasswordFor(model => model.Password)
+                    </div>
+                    <div>
+                        @Html.CheckBoxFor(model => model.RememberMe)
+                        Nhớ mật khẩu?
+                    </div>
+                    <a class="forgot" href="#">Forgot Your Password?</a>
+                    <input type="submit" value="Đăng nhập">
+
+
+                }
+
+                @Html.Partial("_ExternalLoginsListPartial", new JustBasic.Web.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
+                <div class="login-left">
+                    <h3>Chưa có tài khoản</h3>
+                    <p>Nếu bạn chưa có tài khoản vui lòng đăng ký tại link dưới đây:</p>
+                    <a class="acount-btn" href="/dang-ky.html">Đăng ký thành viên</a>
+                </div>
+                <div class="clearfix"> </div>
+
+                @*<form accept-charset='UTF-8' action='login.htm' id='customer_login' method='post'>
+            <input name='form_type' type='hidden' value='customer_login'>
+            <input name='utf8' type='hidden' value='✓'>
+
+
+            <div class="clearfix large_form">
+                <input required type="email" value="" name="customer[email]" id="customer_email" placeholder="Email" class="text" />
+                <input required type="password" value="" name="customer[password]" id="customer_password" placeholder="Mật khẩu" class="text" />
+            </div>
+            <div class="action_bottom text-center">
+                <input class="btn-more btn-login" type="submit" value="Đăng nhập" />
+                <a href="login.htm#" onclick="showRecoverPasswordForm();return false;">Quên mật khẩu?</a>
+            </div>
+            <div class="req_pass">
+                <a class="btn-more btn-register" href="http://somehow.vn/account/register" title="Đăng ký">Đăng ký</a>
+            </div>
+        </form>*@
+            </div>
+            <div id="recover-password" style="display:none;" class="userbox">
+                <div class="accounttype">
+                    <h2>Phục hồi mật khẩu</h2>
+                </div>
+                <form accept-charset='UTF-8' action='' method='post'>
+                    <input name='form_type' type='hidden' value='recover_customer_password'>
+                    <input name='utf8' type='hidden' value='✓'>
+
+
+                    <div class="clearfix large_form">
+                        <input type="email" value="" size="30" name="email" placeholder="Email" id="recover-email" class="text" />
+                    </div>
+                    <div class="action_bottom">
+                        <input class="btn-more btn-login" type="submit" value="Gửi" />
+                    </div>
+                    <div class="req_pass">
+                        <a class="btn-more btn-register" href="login.htm#" onclick="hideRecoverPasswordForm();return false;">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function showRecoverPasswordForm() {
+        document.getElementById('recover-password').style.display = 'block';
+        document.getElementById('login').style.display = 'none';
+    }
+
+    function hideRecoverPasswordForm() {
+        document.getElementById('recover-password').style.display = 'none';
+        document.getElementById('login').style.display = 'block';
+    }
+
+    if (window.location.hash == '#recover') { showRecoverPasswordForm() }</script>
