@@ -1,0 +1,74 @@
+﻿@model JustBasic.Web.Models.HomeViewModel
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaKeyword = Model.MetaKeyword;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    Layout = "~/Views/Shared/Layouts.cshtml";
+}
+@{ Html.RenderAction("Slide", "Home", Model.Slides);}
+
+<div class="banner-index">
+    <div class="container">
+        <div class="row">
+            <div class="main-title text-center">
+                <h2>Sản phẩm mới</h2>
+                <p class="shop-now">
+                    <a href="/shop.html">Xem thêm</a>
+                </p>
+            </div>
+            <div id="owl-product-index2" class="owl-carousel owl-theme clearfix banner-list">
+                @foreach (var productCategory in Model.listProductCategory)
+                {
+                    var url = "/" + productCategory.Alias + ".pc-" + productCategory.ID + ".html";
+                    <div class="banner-item">
+                        <div class="img">
+                            <a href="@url">
+                                <div class="img-show" style="background: url(@productCategory.Image) no-repeat;background-size: cover;background-position: center;"></div>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <h3><a href="@url">@productCategory.Name</a></h3>
+                            <div class="prices">
+                                <span>@productCategory.Description</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="best-seller">
+    <div class="container">
+        <div class="row">
+            <div class="main-title text-center">
+                <h2>Sản phẩm bán chạy</h2>
+                <p class="shop-now">
+                    <a href="/shop.html">Xem thêm</a>
+                </p>
+            </div>
+            <div id="owl-product-index" class="owl-carousel owl-theme">
+
+                @{ Html.RenderAction("BestSeller", "Home", Model.Slides);}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="banner-bottom">
+    <div class="banner-ads text-center">
+        <a href="#">
+            <img src="~/Content/Asset/img/banner_bottom.jpg" alt="Shop customer favorites somehow" />
+        </a>
+    </div>
+</div>
+
+@section footerJs{
+
+}
