@@ -1,0 +1,229 @@
+﻿<!doctype html>
+<!--[if lt IE 7]><html class="no-js ie6 oldie" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js ie7 oldie" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js ie8 oldie" lang="en"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<head>
+    <!--<![endif]-->
+    <link rel="shortcut icon" href="/UploadedFiles/images/logo/37175656_456589424805885_8108433595221147648_n.jpg" type="image/png" />
+    <meta charset="utf-8" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' /><![endif]-->
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.MetaKeyword">
+    <meta name="keywords" content="@ViewBag.MetaDescription">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <link rel="canonical" href="/" />
+
+    <noscript><img height='1' width='1' style='display:none' src='www.facebook.com/tr.gif' /></noscript>
+    <script src="/Scripts/plugins/jquery/jquery-1.11.3.min.js"></script>
+    <!--------------CSS----------->
+
+
+    <link href="/Content/justbasic.css" rel="stylesheet" />
+    <link href="/Content/styles.scss.css" rel='stylesheet' type='text/css' media='all' />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Just Basic  - Hàng VNXK" />
+    <meta property="og:image" content="/UploadedFiles/images/anner.jpg" />
+    <meta property="og:image" content="/UploadedFiles/images/anner.jpg" />
+
+    <meta property="og:description" content="Chuyên quần áo nam phong cách Tây Âu" />
+    <meta property="og:url" content="https:" />
+    <meta property="og:site_name" content="JustBasic - hàng hiệu xuất khẩu" />
+
+    <!--fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!--//fonts-->
+    <style>
+        .ui-autocomplete {
+            z-index: 1000;
+        }
+    </style>
+    <!-- Start of JustBasic Zendesk Widget script -->
+    <script>
+        $(document).ready(function () {
+
+            $('.section-content-text').append('<br><p  style="color:#000;margin:10px 0;    display: inline-block;">Đăng kí tài khoản để tích điểm trở thành Vip Member và nhận những <a style="color: #338dbc;" href="/">ưu đãi</a> từ Just Basic</p>');
+        });
+        ///*<![CDATA[*/window.zEmbed || function (e, t) { var n, o, d, i, s, a = [], r = document.createElement("iframe"); window.zEmbed = function () { a.push(arguments) }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document; try { o = s } catch (e) { n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s } o.open()._l = function () { var e = this.createElement("script"); n && (this.domain = n), e.id = "js-iframe-async", e.src = "https://assets.zendesk.com/embeddable_framework/main.js", this.t = +new Date, this.zendeskHost = "JustBasic.zendesk.com", this.zEQueue = a, this.body.appendChild(e) }, o.write('<body onload="document._l();">'), o.close() }();
+        /*]]>*/</script>
+    <!-- End of JustBasic Zendesk Widget script -->
+    <!-- Facebook Pixel Code -->
+    <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '337316180438163');
+  fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+             src="https://www.facebook.com/tr?id=337316180438163&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+
+</head>
+<body>
+    <div canvas="container">
+        <!--header-->
+        @{Html.RenderAction("Header", "Home");}
+
+        @RenderBody()
+
+        @{ Html.RenderAction("Footer", "Home");}
+
+        <script src="/Scripts/plugins/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="/Scripts/option_selection.min.js"></script>
+        <script src="/Scripts/api.jquery.min.js"></script>
+        <script src='/Scripts/plugins/plugin.min.js' type='text/javascript'></script>
+        <link href='/Content/plugin.min.css' rel='stylesheet' type='text/css' media='all' />
+        <script src='/Scripts/script.js' type='text/javascript'></script>
+    </div>
+    @{ Html.RenderAction("SideBar", "Home"); }
+    <script>
+        jQuery(document).ready(function () {
+            jQuery(".new-control").click(function () {
+                jQuery(this).toggleClass("control-span");
+            });
+        });
+    </script>
+
+    <div class="clearfix"> </div>
+
+    <!-- Modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Giỏ hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr style="background: #e6e6e6;font-weight: bold;">
+                                <td>Sản phẩm</td>
+                                <td style="width:100px;">Đơn giá</td>
+                                <td style="width:100px;">Số lượng</td>
+                                <td style="width:100px;">Khuyến mãi</td>
+                                <td style="width:100px;">Thành tiền</td>
+                            </tr>
+                        </thead>
+                        <tbody id="cartBody"></tbody>
+                        <tfoot>
+                            <tr style="background: #e6e6e6;">
+                                <td colspan="3" style="text-align:right;color:#e81710;font-weight:bold;">Tổng tiền:</td>
+                                <td colspan="3" style="text-align:right;">
+                                    <span id="lblTotalOrder" style="color:#e81710;font-weight:bold;"></span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <div class="pull-left">
+                            <button class="btn" style="background:#504f4f;color:#d8d2d2;" id="btnContinue" data-dismiss="modal"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Tiếp tục chọn hàng</button>
+                        </div>
+                        <div class="pull-right">
+                            <a href="/gio-hang.html" class="btn" id="btnCheckout" style="background:#000000;color:#d8d2d2;">Tiếp tục <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*<script src="/Assets/client/js/jquery.min.js"></script>
+        <script src="~/Assets/admin/libs/jquery-ui/jquery-ui.min.js"></script>
+        <script src="~/Assets/admin/libs/mustache/mustache.js"></script>
+        <script src="~/Assets/admin/libs/numeral/numeral.js"></script>
+        <script src="~/Assets/admin/libs/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/Assets/admin/libs/jquery-validation/dist/additional-methods.min.js"></script>
+        <script src="~/Assets/client/js/common.js"></script>*@
+
+    <!--script-->
+    @*<script src="http://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>*@
+
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+    @*<script src="~/Assets/client/js/jquery.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>*@
+    @*<script src="~/Scripts/owl.carousel.js"></script>*@
+    @*@Scripts.Render("~/js/jquery")*@
+    @Scripts.Render("~/js/plugins")
+    @*<script src="~/Assets/client/js/underscore.js"></script>*@
+
+    @*<link href="~/Assets/client/css/btr-menu.css" rel="stylesheet" />
+        <script src="~/Assets/client/js/btr-menu.js"></script>
+        <link href="~/Assets/client/js/swiper/dist/css/swiper.min.css" rel="stylesheet" />
+        <script src="~/Assets/client/js/swiper/dist/js/swiper.min.js"></script>
+        <script src="~/Assets/client/js/BlockUI/jquery.blockUI.js"></script>
+        <script src="~/Assets/client/js/FileUpload/Uploader-Common.js"></script>
+        <script src="~/Assets/client/js/FileUpload/Uploader-single.core.js"></script>*@
+
+    <script>
+        //$('.example1').wmuSlider();
+        //var swiper = new Swiper('.swiper-container', {
+        //    slidesPerView: 1,
+        //    spaceBetween: 30,
+        //    loop: true,
+        //    pagination: {
+        //        el: '.swiper-pagination',
+        //        clickable: true,
+        //    },
+        //    autoplay: {
+        //        delay: 10000,
+        //        disableOnInteraction: false,
+        //    },
+        //    navigation: {
+        //        nextEl: '.swiper-button-next',
+        //        prevEl: '.swiper-button-prev',
+        //    },
+        //});
+        //$(document).ready(function () {
+        //    $("#navbar").btrmenu();
+        //});
+
+        $('#btnRegisterReceivePromotion').click(function () {
+            var txtEmail = $('#txtEmail').val();
+            if (txtEmail == "") {
+                alert('Nhập email nhận thông tin khuyễn mãi');
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/Home/RegisterReceivePromotion",
+                data: { txtEmail: txtEmail },
+                success: function (res) {
+                    alert(res.status);
+                }
+            });
+        });
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117093072-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-117093072-1');
+    </script>
+
+    @RenderSection("footerJS", required: false)
+</body>
+</html>

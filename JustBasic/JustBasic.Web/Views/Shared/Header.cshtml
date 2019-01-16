@@ -1,0 +1,266 @@
+﻿@using JustBasic.Web.Models;
+@using JustBasic.Common;
+@{
+    var cart = (List<ShoppingCartViewModel>)Session[CommonConstants.SessionCart];
+    var TotalItem = 0;
+    if (cart != null)
+    {
+        foreach (ShoppingCartViewModel item in cart)
+        {
+            TotalItem += item.Quantity;
+        }
+    }
+
+}
+<header>
+    <div class="header-top clearfix hidden-xs hidden-sm">
+        <div class="container">
+
+            <h1 class="logo">
+                <a href="/" class="brand">
+                    <img src="~/Content/Asset/img/logo-2.png" alt="JustBasic - hàng hiệu xuất khẩu" />
+                </a>
+            </h1>
+
+
+            <div class="user-cart hidden-xs hidden-sm">
+                @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @id = "frmLogout" }))
+                {
+                    if (Request.IsAuthenticated)
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="box-login">
+                            <a href="/gio-hang.html" class="cart-top">
+                                Giỏ hàng<span class="cart-count">@TotalItem</span>
+                                <div class="cart-top-info">
+                                    <p>Tổng cộng: @TotalItem</p>
+                                    <span>Giỏ hàng</span>
+                                </div>
+                            </a>
+
+                            <a href="/trang-thanh-vien.html"><i class="fa fa-user" aria-hidden="true"></i> Trang thành viên</a>
+
+                            <a href="#" id="btnLogout"><i class="fa fa-power-off" aria-hidden="true"></i> Đăng thoát</a>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="/dang-nhap.html">Đăng nhập</a>
+                        /**/
+
+                        <a href="gio-hang.html" class="cart-top">
+                            Giỏ hàng<span class="cart-count">@TotalItem</span>
+                            <div class="cart-top-info">
+                                <p>Tổng cộng: @TotalItem</p>
+                                <span>Giỏ hàng</span>
+                            </div>
+                        </a>
+                        /**/
+
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom clearfix hidden-xs hidden-sm">
+        <div class="container">
+
+            <div class="menu-center">
+                <ul class="main-menu clearfix">
+
+
+                    <li>
+                        @*<a class="active" href="/">Trang chủ</a>*@
+                        <a href="/">Trang chủ</a>
+                    </li>
+
+
+
+                    <li class="">
+                        <a class="" href="/shop.html">Sản phẩm</a>
+
+                        <div class="sub">
+                            <div class="sub-container">
+                                <ul class="menu-item bg">
+
+                                    <li><a href="/shop.html">SẢN PHẨM MỚI</a></li>
+
+                                    <li><a href="/shop.html">SẢN PHẨM BÁN CHẠY</a></li>
+
+                                    <li><a href="/shop.html">SALE OFF</a></li>
+
+                                </ul>
+                                <ul class="menu-item">
+
+                                    <li>
+                                        <a href="/ao-khoac.pc-6.html">ÁO KHOÁC</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/ao-somi.pc-7.html">ÁO SƠ MI</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/ao-thun.pc-1.html">ÁO THUN</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/ao-polo.pc-3.html">ÁO POLO</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/ao-ni.pc-2.html">ÁO NỈ</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/ao-len.pc-5.html">ÁO LEN</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/hoodies.pc-8.html">HOODIES</a>
+
+                                    </li>
+
+                                </ul>
+                                <ul class="menu-item">
+
+                                    <li>
+                                        <a href="/quan-jean.pc-9.html">QUẦN JEAN</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/quan-kaki.pc-10.html">QUẦN KAKI</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/quan-tay.pc-11.html">QUẦN TÂY</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/quan-dui.pc-12.html">QUẦN ĐÙI</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/jogger.pc-13.html">JOGGERS</a>
+
+                                    </li>
+
+                                </ul>
+                                <ul class="menu-item">
+
+                                    <li>
+                                        <a href="/non-vo-underwear-phu-kien.pc-4.html">NÓN - VỚ - UNDERWEAR - PHỤ KIỆN</a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="/giay-dep.pc-14.html">GIÀY - DÉP</a>
+
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </li>
+
+
+
+                    <li>
+                        <a class="" href="/trang/lien-he.html">Giới thiệu</a>
+                    </li>
+
+
+
+                    <li class=" has-child">
+                        <a class="" href="/trang/huong-dan-mua-hang-online.html">Hướng dẫn</a>
+
+                        <ul class="child">
+
+                            <li><a href="/trang/huong-dan-mua-hang-online.html">Hướng Dẫn Mua Hàng Online</a></li>
+
+                            <li><a href="/trang/huong-dan-lua-size-ao-thun.html">Hướng Dẫn Lựa Chọn Size</a></li>
+
+                        </ul>
+
+                    </li>
+
+
+
+                    <li>
+                        <a class="" href="/trang/lien-he.html">Địa chỉ cửa hàng</a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+            <div class="search-pc pull-right">
+                <span>Tìm kiếm</span>
+                <div class="search-bar">
+                    <div class="container">
+                        <form action="tim-kiem.html" class="search-top">
+                            <label>Tìm kiếm:</label>
+                            <input type="hidden" name="type" value="product" />
+                            <input type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm..." />
+                            <button type="submit" class="search-btn">Nhập</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="header-new visible-xs visible-sm">
+        <div class="container clearfix ">
+            <div class="header-container clearfix">
+                <div class="clearfix">
+                    <div class="js-toggle-left-slidebar js-menu-mobile">
+                        <div class="trigger-menu">
+                            <span class="three-bars-icon"></span><span class="text">menu</span>
+                        </div>
+                    </div>
+                    <div class="logo">
+                        <a href="/">
+                            <img alt="JustBasic - hàng hiệu xuất khẩu" src="~/Content/Asset/img/logo-2.png">
+                        </a>
+                    </div>
+                    <div class="login-icon">
+                        <a href="account/login.htm"><i class="fa fa-user" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="menu-top clearfix">
+                        <div class="search">
+                            <span class="ic-search" onclick="Search();"></span>
+                        </div>
+                    </div>
+                    <div class="search-on-mobile">
+                        <div class="inside">
+                            <form action="tim-kiem.html" method="get">
+                                <input type="hidden" value="product" name="type" />
+                                <input value="" name="q" id="input-search-mobile" type="text" placeholder="Tìm kiếm...">
+                                <a href="#" class="close-search-mobile">Đóng search</a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="cart-top">
+                        <a href="cart.htm">
+                            <img src="/Content/Asset/img/cart.svg" alt="cart mobile" width="16" />
+                            <span class="number-count">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</header>

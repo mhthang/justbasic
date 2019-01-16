@@ -1,0 +1,31 @@
+﻿@model List<JustBasic.Web.Models.ProductViewModel>
+@foreach (var product in Model)
+{
+    var url = "/" + product.Alias + ".p-" + product.ID + ".html";
+    <div class="item">
+        <div class="product-item">
+            <div class="img">
+                <a href="@url">
+                    <div class="img-show" style="background: url(@product.Image) no-repeat;background-size: cover;background-position: center;"></div>
+                </a>
+            </div>
+            <div class="info">
+                <h3><a href="@url">@product.Name</a></h3>
+                <div class="prices">
+
+                    @if (product.PromotionPrice.HasValue && @product.PromotionPrice > 0)
+                    {
+                        decimal PromotionProduct = (product.Price - product.PromotionPrice.Value);
+                        <span >@PromotionProduct.ToString("N0")₫</span>
+                        <span class="old-price">@product.Price.ToString("N0")₫</span>
+                    }
+                    else
+                    {
+                        <span>@(product.Price == 0 ? "Liên hệ" : product.Price.ToString("N0"))</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

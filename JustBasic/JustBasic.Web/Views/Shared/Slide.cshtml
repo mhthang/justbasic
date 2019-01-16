@@ -1,0 +1,19 @@
+﻿@model List<JustBasic.Web.Models.SlideViewModel>
+<div id="owl-index" class="owl-carousel owl-theme">
+    @foreach (var slide in Model)
+    {
+        <div class="item">
+            <img src="@slide.Image" alt="slider 1" />
+
+            <div class="slider-caption">
+                <div class="slider-title">
+                    @slide.Name
+                </div>
+                <div class="slider-des ">
+                    @slide.Description
+                </div>
+                <a href="@slide.Url" class="slider-btn">Xem Thêm</a>
+            </div>
+        </div>
+    }
+</div>

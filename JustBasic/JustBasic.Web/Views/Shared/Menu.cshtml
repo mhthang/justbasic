@@ -1,0 +1,41 @@
+﻿@model List<JustBasic.Model.Models.MenuViewModel>
+<div>
+    <div class="container">
+        <div>
+            <nav class="navbar navbar-inverse" style="background-color: #fff !important; border-color: #fff !important;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="background: #f4b233;">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @*<a class="navbar-brand" href="#">Project name</a>*@
+                </div>
+                <div id="navbar" class="collapse navbar-collapse" style="border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;">
+                    <ul class="nav navbar-nav">
+                        <li active>
+                            <a href="/" style="padding: 10px !important;">
+                                <span><i class="fa fa-2x fa-home"></i></span>
+                                @*<img src="~/Assets/client/images/arrow-menu-home.png" />*@
+                            </a>
+                        </li>
+                        @foreach (var menu in Model)
+                        {
+                            <li><a href="@menu.URL"><span>@menu.Name</span></a></li>
+                        }
+                        @*<li><a href="/"><span>Sản Phẩm</span></a></li>
+                            <li><a href="#"><span>Nệm (Đệm)</span></a></li>
+                            <li><a href="#"><span>DRAP</span></a></li>
+                            <li><a href="#"><span>NÊM EM BÉ</span></a></li>
+                            <li><a href="#"><span>KHUYẾN MÃI</span></a></li>
+                            <li><a href="#"><span>KÊNH PHÂN PHỐI</span></a></li>
+                            <li><a href="#"><span>BẢO HÀNH</span></a></li>
+                            <li><a href="#"><span>TRỢ GIÚP</span></a></li>
+                            <li><a href="#"><span>LIÊN HỆ</span></a></li>*@
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </nav>
+        </div>
+    </div>
+</div>
