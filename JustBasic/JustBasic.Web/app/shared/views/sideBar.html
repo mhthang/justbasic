@@ -1,0 +1,155 @@
+﻿    <!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel" style="height:60px;">
+        <div class="pull-left image">
+            <img src="/Content/Asset/img/logo-2.png" class="img-rounded" alt="User Image">
+        </div>
+        <div class="pull-left info">
+            <p>{{authentication.userName}}</p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+    </div>
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-dashboard"></i> <span>Trang chủ</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Hệ thống</span>
+                <span class="label label-primary pull-right">3</span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a ui-sref="application_groups"><i class="fa fa-circle-o"></i> Nhóm người dùng</a></li>
+                <li><a ui-sref="application_roles"><i class="fa fa-circle-o"></i> Quyền</a></li>
+                <li><a ui-sref="application_users"><i class="fa fa-circle-o"></i> Người dùng</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Sản phẩm</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a ui-sref="product_categories"><i class="fa fa-circle-o"></i> Danh mục sản phẩm</a></li>
+                <li><a ui-sref="products"><i class="fa fa-circle-o"></i> Sản phẩm</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Color</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a ui-sref="colors"><i class="fa fa-circle-o"></i> Danh sách color</a>
+                </li>
+                <li><a ui-sref="color_add"><i class="fa fa-circle-o"></i> Thêm color</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Sizes</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a ui-sref="sizes"><i class="fa fa-circle-o"></i> Danh sách size</a>
+                </li>
+                <li><a ui-sref="size_add"><i class="fa fa-circle-o"></i> Thêm size</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Làm giá sản phẩm</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a ui-sref="product_prices"><i class="fa fa-circle-o"></i>danh sách giá sản phẩm</a></li>
+                <li><a ui-sref="product_price_add"><i class="fa fa-circle-o"></i> Tạo giá sản phẩm</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Slides</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a ui-sref="slides"><i class="fa fa-circle-o"></i> Danh sách slides</a>
+                </li>
+                <li><a ui-sref="slide_add"><i class="fa fa-circle-o"></i> Thêm slide</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Page</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a ui-sref="pages"><i class="fa fa-circle-o"></i> Danh sách page</a>
+                </li>
+                <li><a ui-sref="page_add"><i class="fa fa-circle-o"></i> Thêm page</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Menu</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a ui-sref="menus"><i class="fa fa-circle-o"></i> Danh sách menu</a>
+                </li>
+                <li><a ui-sref="menu_add"><i class="fa fa-circle-o"></i> Thêm menu</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-files-o"></i>
+                <span>Config</span>
+                <span class="label label-primary pull-right">2</span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a ui-sref="configs"><i class="fa fa-circle-o"></i> Danh sách config</a>
+                </li>
+                <li><a ui-sref="config_add"><i class="fa fa-circle-o"></i> Thêm config</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="javascript:void(0);">
+                <i class="fa fa-area-chart"></i>
+                <span>Thống kê</span>
+                <span class="label label-primary pull-right">1</span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a ui-sref="statistic_revenue"><i class="fa fa-circle-o"></i> Thống kê doanh số</a></li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<!-- /.sidebar -->
