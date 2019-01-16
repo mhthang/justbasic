@@ -1,0 +1,518 @@
+﻿@using JustBasic.Web.Models;
+@using JustBasic.Common;
+@{
+    ViewBag.Title = "Thông tin đơn hàng";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+    var cart = (List<ShoppingCartViewModel>)Session[CommonConstants.SessionCart];
+    var NotRegister = (bool)Session["NotRegister"];
+}
+
+@if (cart == null || cart.Count == 0)
+{
+    <h4>Không có sản phẩm nào trong giỏ hàng</h4>
+}
+else if (!Request.IsAuthenticated && !NotRegister)
+{
+    @section footerJS{
+        <script>
+            fbq('track', 'AddToCart');
+        </script>
+
+        <script>
+
+            $('#btnNotRegister').off('click').on('click', function () {
+                $.ajax({
+                    url: '/ShoppingCart/SetNotRegister',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status) {
+                            window.location.href = '/gio-hang.html';
+                        }
+                    }
+                });
+            });
+        </script>
+    }
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <h4 style="padding-bottom: 25px;">Bạn là khách hàng mới</h4>
+        <p><a href="/dang-ky.html" style="color:blue;"><i class="fa fa-user-plus" aria-hidden="true"></i> Đăng ký thành viên</a></p>
+        <p><a href="javascript:void(0)" id="btnNotRegister" style="color:blue;"><i class="fa fa-cart-plus" aria-hidden="true"></i> Mua hàng không cần đăng ký</a></p>
+        <p>Đăng ký một tài khoản để được hưởng những ưu đãi hoàn toàn miễn phí</p>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <h4 style="padding-bottom: 25px;">Bạn đã có tài khoản? Đăng nhập ngay!</h4>
+        <a href="/dang-nhap.html" style="color:blue;"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng nhập tài khoản</a>
+    </div>
+}
+else
+{
+    <div id="cart">
+        <div class="fix-breadcrumb">
+            <ol class="breadcrumb breadcrumb-arrow hidden-sm hidden-xs">
+                <li>
+                    <a href="/" target="_self">Trang chủ</a>
+                </li>
+                <li class="active">
+                    Giỏ hàng: <span id="ajax-breadcrumb-cart-item-count">@cart.Count</span>
+
+                    <span id="ajax-breadcrumb-cart-item-text">sản phẩm</span> -
+
+                    @*<span id="ajax-breadcrumb-cart-total-price">880,000₫</span>*@
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!-- Steps form -->
+    <div class="card container">
+        <div class="card-body mb-4">
+            <!-- Stepper -->
+            <div class="steps-form">
+                <div class="steps-row setup-panel">
+                    <div class="steps-step">
+                        <a href="#step-9" type="button" class="btn btn-indigo btn-circle">1</a>
+                        <p>Giỏ hàng</p>
+                    </div>
+                    <div class="steps-step">
+                        <a href="#step-10" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                        <p>Thông tin đặt hàng</p>
+                    </div>
+                    <div class="steps-step">
+                        <a href="#step-11" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                        <p>Phương thức thanh toán</p>
+                    </div>
+                    <div class="steps-step">
+                        <a href="#step-12" id="btnSucess" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                        <p>Hoàn tất</p>
+                    </div>
+                </div>
+            </div>
+            <form role="form" id="frmPayment" action="" method="post">
+                <!-- First Step -->
+                <div class="row setup-content" id="step-9">
+                    <div class="single_top1">
+                        <div class="single_grid">
+                            <div id="cartContent" class="table-responsive">
+                                <table class="cart cart-hidden">
+                                    <thead>
+                                        <tr style="background: #e6e6e6;font-weight: bold;">
+                                            <td>Sản phẩm</td>
+                                            <td>Đơn giá</td>
+                                            <td>Số lượng</td>
+                                            <td>Khuyến mãi</td>
+                                            <td>Thành tiền</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cartBody"></tbody>
+                                    <tfoot>
+                                        <tr style="background: #e6e6e6;">
+                                            <td colspan="4" style="text-align:right;color:#e81710;font-weight:bold;">Tổng tiền cần thanh toán(Bao gồm phí vận chuyển)</td>
+                                            <td>
+                                                <span id="lblTotalOrder" style="color:#e81710;font-weight:bold;"></span>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+                                <div>
+                                    <div class="pull-left">
+                                        <a href="/" class="btn" style="background:#504f4f;color:#d8d2d2;" id="btnContinue"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Tiếp tục mua hàng</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <button class="btn" id="btnDeleteAll" style="background:#504f4f;color:#d8d2d2;"><i class="fa fa-times" aria-hidden="true"></i> Hủy </button>
+                                        <button class="btn btn-indigo btn-rounded nextBtn" style="background:#000000;color:#d8d2d2;">Tiếp tục <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div style="margin-top:15px;">
+                                    <h4>Hướng dẫn</h4>
+                                    <div style="padding:15px;border: 1px solid #efe9e9;">
+                                        <p><i class="fa fa-file-audio-o" aria-hidden="true"></i> Nhấn <b>Tiếp tục chọn hàng</b> để chọn các sản phẩm khác</p>
+                                        <p><i class="fa fa-file-audio-o" aria-hidden="true"></i> Nhấn <b>Bỏ sản phẩm</b> để xóa sản phẩm khỏi danh sách giỏ hàng</p>
+                                        <p><i class="fa fa-file-audio-o" aria-hidden="true"></i> Nhấn <b>Hủy giỏ hàng</b> để xóa tất cả sản phẩm đã chọn</p>
+                                        <p><i class="fa fa-file-audio-o" aria-hidden="true"></i> Vui lòng kiểm tra lại tất cả các sản phẩm, sau đó nhấn <b>Tiếp tục</b> để gửi đơn hàng của bạn</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                    <script id="tplCart" type="x-tmpl-mustache">
+                        <tr>
+                            <td>
+                                <div class="col-md-2" style="padding:0px;">
+                                    <img src="{{Image}}" height="50" />
+                                </div>
+                                <div class="col-md-10" style="padding:0px;">
+                                    <p>{{ProductName}}</p>
+                                    <p>Màu sắc: {{ColorName}}</p>
+                                    <p>Size: {{SizeName}}</p>
+                                    <a href="javascript:void(0);" class="btnDeleteItem" data-id="{{Id}}" style="color:#0064ff;text-decoration:none;">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i> Bỏ sản phẩm
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                {{PriceF}}
+                            </td>
+                            <td>
+                                <input type="number" min="1" max="100"
+                                       data-id="{{Id}}"
+                                       data-productid="{{ProductId}}"
+                                       data-size="{{size}}"
+                                       data-color="{{color}}"
+                                       data-price="{{Price}}"
+                                       data-promotion="{{Promotion}}"
+                                       value="{{Quantity}}" class="input txtQuantity form-control input-sm" />
+                            </td>
+                            <td>
+                                {{PromotionF}}
+                            </td>
+                            <td id="amount_{{Id}}">{{Amount}}</td>
+                        </tr>
+                    </script>
+                </div>
+
+                <!-- Second Step -->
+                <div class="row setup-content" id="step-10">
+                    <div class="col-md-12">
+                        <h3 class="font-weight-bold pl-0 my-4"><strong>Thông tin người nhận</strong></h3>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <label style="cursor:pointer;">
+                                    <input type="checkbox" id="chkUserLoginInfo" />
+                                    Sử dụng thông tin đăng nhập
+                                </label>
+                            </div>
+                        }
+                        <div class="form-group md-form">
+                            <label for="txtName">Họ và tên</label>
+                            <input id="txtName" type="text" name="name" class="form-control validate">
+                        </div>
+                        <div class="form-group md-form mt-3">
+                            <label for="txtPhone">Điện thoại</label>
+                            <input id="txtPhone" type="text" name="phone" class="form-control validate">
+                        </div>
+                        <div class="form-group md-form mt-3">
+                            <label for="txtAddress">Địa chỉ giao hàng</label>
+                            <textarea id="txtAddress" type="text" name="address" rows="2" class="md-textarea validate form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDescription">Những yêu cầu khác</label>
+                            <textarea class="form-control" id="txtDescription" name="description" placeholder="Vui lòng ghi rõ yêu cầu đặt biệt (nếu có)"></textarea>
+                        </div>
+                        <div class="pull-left">
+                            <button class="btn btn-indigo btn-rounded prevBtn float-left" type="button" style="background:#504f4f;color:#d8d2d2;"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Quay lại</button>
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-indigo btn-rounded nextBtn float-right" type="button" style="background:#000000;color:#d8d2d2;">Tiếp tục <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third Step -->
+                <div class="row setup-content" id="step-11">
+                    <div class="col-md-12">
+                        <h3 class="font-weight-bold pl-0 my-4"><strong>Phương thức thanh toán</strong></h3>
+                        <div>
+                            <div id="divCheckout">
+                                <div><label><input type="radio" id="rdoCash" name="paymentMethod" value="CASH" checked="checked" /> Tiền mặt</label></div>
+                                <div><label><input type="radio" id="rdoCK" name="paymentMethod" value="CK" /> Chuyển khoản</label></div>
+                                <div id="ChuyenKhoanContent" style="display:none;">
+                                    @*<h3>Tài Khoản Thanh Toán Khi Mua Hàng :</h3>
+                                        <p><b>1. ACB - Ngân hàng thương mại cổ phần ABC</b></p>
+                                        <p>NGUYEN VAN A</p>
+                                        <p>số TK : 0123456789</p>
+                                        <p>Chi Nhánh : ACB TP.HCM</p>
+                                        <p>Thành Phố : HCM</p>*@
+                                    @Html.Action("GetSystemConfig", "Home", new { Name = "ThongTinTaiKhoanNganHang" })
+                                </div>
+                                @*<div>
+                                        <label><input type="radio" id="rdoNL" name="paymentMethod" value="NL" /> TK Ngân Lượng</label>
+                                    </div>
+                                    <div>
+                                        <label><input type="radio" id="rdoBank" value="ATM_ONLINE" name="paymentMethod" /> Thẻ Ngân hàng nội địa</label>
+                                    </div>
+                                    <div>
+                                        <label><input type="radio" id="rdoVisa" name="paymentMethod" value="VISA" /> VISA</label>
+                                    </div>
+                                    <div id="bankContent" class="boxContent" style="display:none;">
+                                        Danh sách ngân hàng nội địa:
+                                        <ul class="cardList clearfix">
+                                            <li class="bank-online-methods ">
+                                                <label for="vcb_ck_on">
+                                                    <i class="VCB" title="Ngân hàng TMCP Ngoại Thương Việt Nam"></i>
+                                                    <input type="radio" ID="VCB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="vnbc_ck_on">
+                                                    <i class="DAB" title="Ngân hàng Đông Á"></i>
+                                                    <input type="radio" ID="DAB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="tcb_ck_on">
+                                                    <i class="TCB" title="Ngân hàng Kỹ Thương"></i>
+                                                    <input type="radio" ID="TCB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_mb_ck_on">
+                                                    <i class="MB" title="Ngân hàng Quân Đội"></i>
+                                                    <input type="radio" ID="MB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="shb_ck_on">
+                                                    <i class="SHB" title="Ngân hàng Sài Gòn - Hà Nội"></i>
+                                                    <input type="radio" ID="SHB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_vib_ck_on">
+                                                    <i class="VIB" title="Ngân hàng Quốc tế"></i>
+                                                    <input type="radio" ID="VIB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_vtb_ck_on">
+                                                    <i class="ICB" title="Ngân hàng Công Thương Việt Nam"></i>
+                                                    <input type="radio" ID="ICB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_exb_ck_on">
+                                                    <i class="EXB" title="Ngân hàng Xuất Nhập Khẩu"></i>
+                                                    <input type="radio" ID="EXB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_acb_ck_on">
+                                                    <i class="ACB" title="Ngân hàng Á Châu"></i>
+                                                    <input type="radio" ID="ACB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_hdb_ck_on">
+                                                    <i class="HDB" title="Ngân hàng Phát triển Nhà TPHCM"></i>
+                                                    <input type="radio" ID="HDB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_msb_ck_on">
+                                                    <i class="MSB" title="Ngân hàng Hàng Hải"></i>
+                                                    <input type="radio" ID="MSB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_nvb_ck_on">
+                                                    <i class="NVB" title="Ngân hàng Nam Việt"></i>
+                                                    <input type="radio" ID="NVB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_vab_ck_on">
+                                                    <i class="VAB" title="Ngân hàng Việt Á"></i>
+                                                    <input type="radio" ID="VAB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_vpb_ck_on">
+                                                    <i class="VPB" title="Ngân Hàng Việt Nam Thịnh Vượng"></i>
+                                                    <input type="radio" ID="VPB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_scb_ck_on">
+                                                    <i class="SCB" title="Ngân hàng Sài Gòn Thương tín"></i>
+                                                    <input type="radio" ID="SCB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="ojb_ck_on">
+                                                    <i class="OJB" title="Ngân hàng Đại Dương"></i>
+                                                    <input type="radio" ID="OJB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="bnt_atm_pgb_ck_on">
+                                                    <i class="PGB" title="Ngân hàng Xăng dầu Petrolimex"></i>
+                                                    <input type="radio" ID="PGB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="bnt_atm_gpb_ck_on">
+                                                    <i class="GPB" title="Ngân hàng TMCP Dầu khí Toàn Cầu"></i>
+                                                    <input type="radio" ID="GPB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="bnt_atm_agb_ck_on">
+                                                    <i class="AGB" title="Ngân hàng Nông nghiệp &amp; Phát triển nông thôn"></i>
+                                                    <input type="radio" ID="AGB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="bnt_atm_sgb_ck_on">
+                                                    <i class="SGB" title="Ngân hàng Sài Gòn Công Thương"></i>
+                                                    <input type="radio" ID="SGB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="bnt_atm_nab_ck_on">
+                                                    <i class="NAB" title="Ngân hàng Nam Á"></i>
+                                                    <input type="radio" ID="NAB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                            <li class="bank-online-methods ">
+                                                <label for="sml_atm_bab_ck_on">
+                                                    <i class="BAB" title="Ngân hàng Bắc Á"></i>
+                                                    <input type="radio" ID="BAB" name="bankcode" />
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div id="nganluongContent" class="boxContent" style="display:none;">
+                                        <p>
+                                            Thanh toán trực tuyến AN TOÀN và ĐƯỢC BẢO VỆ, sử dụng thẻ ngân hàng trong và ngoài nước hoặc nhiều hình thức tiện lợi khác.
+                                            Được bảo hộ & cấp phép bởi NGÂN HÀNG NHÀ NƯỚC, ví điện tử duy nhất được cộng đồng ƯA THÍCH NHẤT 2 năm liên tiếp, Bộ Thông tin Truyền thông trao giải thưởng Sao Khuê
+                                            <br />Giao dịch. Đăng ký ví NgânLượng.vn miễn phí <a href="https://www.nganluong.vn/?portal=nganluong&amp;page=user_register" target="_blank">tại đây</a>
+                                        </p>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="fa-pull-left">
+                            <button class="btn btn-indigo btn-rounded prevBtn float-left" type="button" style="background:#504f4f;color:#d8d2d2;"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Quay lại</button>
+                        </div>
+                        <div class="pull-right">
+                            <button id="btnCreateOrder" class="btn btn-indigo btn-rounded float-right" type="button" style="background:#504f4f;color:#d8d2d2;">Thanh toán <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Four Step -->
+                <div class="row setup-content" id="step-12">
+                    <div class="col-md-12">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Steps form -->
+    <div class="success-form container" style="display:none;">
+        <div class="steps-form success-form" style="display:none;">
+            <div class="steps-row setup-panel">
+                <div class="steps-step">
+                    <a href="javascript:void(0)" type="button" class="btn btn-circle">1</a>
+                    <p>Giỏ hàng</p>
+                </div>
+                <div class="steps-step">
+                    <a href="javascript:void(0)" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                    <p>Thông tin đặt hàng</p>
+                </div>
+                <div class="steps-step">
+                    <a href="javascript:void(0)" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                    <p>Phương thức thanh toán</p>
+                </div>
+                <div class="steps-step">
+                    <a href="javascript:void(0)" style="background: #191818; border: 1px solid #150101; color: #fff;" type="button" class="btn btn-default btn-circle">4</a>
+                    <p>Hoàn tất</p>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="color: #0070b6;height:100px;">
+            <div class="col-md-12">
+                <h3>Đặt hàng thành công. Chúng tôi sẽ liên hệ lại sớm nhất!</h3>
+            </div>
+        </div>
+    </div>
+
+    @section footerJS{
+        <script src="~/Assets/client/js/controllers/shoppingCart.js"></script>
+        <script>
+            $(document).ready(function () {
+                var navListItems = $('div.setup-panel div a'),
+                    allWells = $('.setup-content'),
+                    allNextBtn = $('.nextBtn'),
+                    allPrevBtn = $('.prevBtn');
+
+                allWells.hide();
+
+                navListItems.click(function (e) {
+                    e.preventDefault();
+                    var $target = $($(this).attr('href')),
+                        $item = $(this);
+
+                    if (!$item.hasClass('disabled')) {
+                        navListItems.removeClass('btn-indigo').addClass('btn-default');
+                        $item.addClass('btn-indigo');
+                        allWells.hide();
+                        $target.show();
+                        $target.find('input:eq(0)').focus();
+                    }
+                });
+
+                allPrevBtn.click(function () {
+                    var curStep = $(this).closest(".setup-content"),
+                        curStepBtn = curStep.attr("id"),
+                        prevStepSteps = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
+
+                    prevStepSteps.removeAttr('disabled').trigger('click');
+                });
+
+                allNextBtn.click(function () {
+                    var curStep = $(this).closest(".setup-content"),
+                        curStepBtn = curStep.attr("id"),
+                        nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+                        curInputs = curStep.find("input[type='text'],input[type='url'],input[type='email']"),
+                        isValid = true;
+                    if (curStepBtn == 'step-10') {
+                        $('#frmPayment').validate({
+                            rules: {
+                                name: "required",
+                                address: "required",
+                                email: {
+                                    required: true,
+                                    email: true
+                                },
+                                phone: {
+                                    required: true,
+                                    number: true
+                                }
+                            },
+                            messages: {
+                                name: "Yêu cầu nhập tên",
+                                address: "Yêu cầu nhập địa chỉ",
+                                email: {
+                                    required: "Bạn cần nhập email",
+                                    email: "Định dạng email chưa đúng"
+                                },
+                                phone: {
+                                    required: "Số điện thoại được yêu cầu",
+                                    number: "Số điện thoại phải là số."
+                                }
+                            }
+                        });
+                        var isValid = $('#frmPayment').valid();
+                    }
+                    if (curStepBtn == 'step-11') {
+                        var PaymentMethod = $('input[name="paymentMethod"]:checked').val(),
+                            BankCode = $('input[name="bankcode"]:checked').prop('id');
+                        if (PaymentMethod == 'ATM_ONLINE' && BankCode == undefined) {
+                            alert('Chọn ngân hàng.');
+                            isValid = false;
+
+                        }
+                    }
+                    if (isValid) {
+                        nextStepWizard.removeAttr('disabled').trigger('click');
+                    }
+                });
+
+                $('div.setup-panel div a.btn-indigo').trigger('click');
+            });
+        </script>
+    }
+}
