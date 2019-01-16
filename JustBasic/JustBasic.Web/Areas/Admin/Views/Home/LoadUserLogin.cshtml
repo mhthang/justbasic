@@ -1,0 +1,31 @@
+﻿@using System.Configuration;
+@{
+    var username = "";
+    var name = "";
+    var avatar = "/content/img/avatars/male.png";
+    //if (Model != null && Model.Fullname != null)
+    //{
+    //    username = Model.Username;
+    //    name = Model.Fullname;
+    //}
+    //if (Model != null && !string.IsNullOrEmpty(Model.Avatar) && Model.Avatar != "null")
+    //{
+    //    avatar = Model.Avatar;
+    //}
+}
+<ul class="nav navbar-nav avata-nav navbar-right">
+    <li class="image dropdown">
+        <a href="javascript:void()" title="@name" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <img class="img-circle" style="width:38px;" src="@avatar" />
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" style="right: 0;">
+            <li style="width:100%">
+                <a href="/"> <i class="fa fa-user"></i>Nem Mai Vang</a>
+            </li>
+            <li style="width:100%">
+                <a href="/Accounts/Logout"> <i class="fa fa-sign-out"></i> Đăng xuất</a>
+            </li>
+        </ul>
+    </li>
+</ul>

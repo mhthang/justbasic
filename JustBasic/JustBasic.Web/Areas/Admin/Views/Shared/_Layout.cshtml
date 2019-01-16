@@ -1,0 +1,123 @@
+﻿@using System.Configuration;
+@using JustBasic.Web.Helpers;
+@{
+}
+<!DOCTYPE html>
+<html class="@SettingHelper.CurrentTheme">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/static/bundle.min.css" />
+    <link href="~/Content/css/font-base64.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/content/img/concung.ico" type="image/x-icon">
+    <link rel="icon" href="~/content/img/concung.ico" type="image/x-icon">
+    <style type="text/css">
+        /* When the body has the loading class, we turn
+           the scrollbar off with overflow:hidden */
+        body.loading {
+            overflow: hidden;
+        }
+
+            /* Anytime the body has the loading class, our
+           modal element will be visible */
+            body.loading .modal {
+                display: block;
+            }
+        /*
+            Angularjs - Hide content until DOM loaded
+        */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+    <script>
+        var MasterData = {};
+    </script>
+</head>
+<body ng-app="MyApp" class="@SettingHelper.CurrentTheme">
+    <div class="navbar navbar-inverse">
+        <div class="container-full">
+            <div class="pull-left">
+                <ul class="nav navbar-nav categoryMenu">
+                    <li style="position: initial;">
+                        <a href="#" class="navbar-toggle dropdown-toggle" data-toggle="dropdown">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <ul class="dropdown-menu category" style="">
+                            <li class="title">
+                                Phân hệ
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="/content/img/aos_new.png" />
+                                    <span>
+                                        <strong>AOS</strong>
+                                        <small>Hệ thống đặt hàng</small>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <img src="/content/img/crm.png" />
+                                    <span>
+                                        <strong>CRM</strong>
+                                        <small>Hệ thống CRM</small>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <img src="/content/img/erp.png" />
+                                    <span>
+                                        <strong>ERP</strong>
+                                        <small>Hệ thống CRM</small>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="~/">
+                    <img alt="concung.com" src="/content/img/logo-cc-white.png" style="width:180px" />
+                </a>
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse">
+                @Html.Action("LoadUserLogin", "Home", new { Areas = "Admin" })
+                @Html.Action("Menu", "Home", new { Areas = "Admin" })
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div id="main" role="main">
+        @{ Html.RenderPartial("_SiteMaps", Request.IsAuthenticated); }
+        <div ng-controller="MasterPageController" ng-cloak>
+            <div id="show-waiting" ng-show="MasterPage.IsLoading">
+                <div class="waiting"></div>
+            </div>
+        </div>
+        <div id="content">
+            @RenderBody()
+        </div>
+    </div>
+    <!-- PAGE FOOTER -->
+    @Html.Action("_Footer", "Home", new { Areas = "Admin" })
+    <!-- END PAGE FOOTER -->
+    @{ Html.RenderPartial("_Scripts", RenderSection("pagespecific", false));}
+    @RenderSection("jsScript", false)
+</body>
+</html>

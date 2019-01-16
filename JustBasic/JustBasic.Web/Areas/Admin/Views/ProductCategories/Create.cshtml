@@ -1,0 +1,219 @@
+﻿@{
+    ViewBag.Title = "Thêm mới nhóm sản phẩm";
+}
+<div ng-controller="CreateController" ng-cloak>
+    <!--Thông tin chung-->
+    <div class="row">
+        <div class="jarviswidget jarviswidget-sortable">
+            <header>
+                <span class="widget-icon"><i class="fa fa-user"></i></span>
+                <h2>Thông tin chung</h2>
+            </header>
+            <div>
+                <form id="HeaderForm">
+                    <div class="widget-body">
+                        <fieldset>
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <div>
+                                    <div class="widget-body">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <label>Tên danh mục</label>
+                                                <input type="text" class="form-control" readonly="readonly"
+                                                       ng-model="ObjProductCategory.Name" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Mã khách hàng</label>
+                                                <div class="input-group">
+                                                    <input ng-model="ObjPayFormAddDetailReq.SupplierID" type="text"
+                                                           readonly="readonly" class="form-control" style="padding-left: 10px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-default ng-hide" type="button"
+                                                                ng-show="ObjPayFormAddDetailReq.SupplierID.length > 0"
+                                                                ng-click="ClearSearchSupplier();">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button class="btn btn-default" type="button"
+                                                                ng-disabled="ObjPayFormAddDetailReq.PaymentTypeID!=2"
+                                                                ng-click="ShowSearchSupplier();">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Số tài khoản</label>
+                                                <input type="text" class="form-control" readonly="readonly"
+                                                       ng-model="ObjPayFormAddDetailReq.BankNo" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tên chủ tài khoản</label>
+                                                <input type="text" class="form-control" readonly="readonly"
+                                                       ng-model="ObjPayFormAddDetailReq.SupplierName" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ngân hàng</label>
+                                                <input type="text" class="form-control" readonly="readonly"
+                                                       ng-model="ObjPayFormAddDetailReq.BankName" />
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <div>
+                                    <div class="widget-body">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <label>Người đề nghị</label>
+                                                <input type="text" value="{{UserPricinpal.Username}} - {{UserPricinpal.Fullname}}" class="form-control" readonly="readonly" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>
+                                                    Phòng ban - bộ phận
+                                                </label>
+                                                <input type="text" value="{{UserPricinpal.DepartmentName}}" class="form-control" readonly="readonly" />
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-6 col-md-6 col-lg-6 no-padding" style="margin-bottom: 15px;">
+                                                    <label>
+                                                        Đơn vị tiền tệ
+                                                    </label>
+                                                    <select id="ddlCurrencyUnit" class="select2"
+                                                            ng-change="ddlCurrencyUnitchange();"
+                                                            ng-model="ObjPayFormAddDetailReq.CurrentUnitID">
+                                                        <option ng-repeat="item in ddlCurrencyUnit.Lst" value="{{item.CurrencyUnitID}}">
+                                                            {{item.CurrencyCode}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-6 no-padding" style="margin-bottom: 15px;">
+                                                    <label>
+                                                        Tỉ giá
+                                                    </label>
+                                                    <input type="text" class="form-control"
+                                                           ng-model="ObjCurrencyUnit.CurrencyExchange"
+                                                           input-format="toFixedDecimal" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ngày thanh toán</label>
+                                                <input type="text" id="dtmPaymentDate"
+                                                       ng-model="PaymentDateDisplay" class="form-control" />
+                                            </div>
+                                            <div class="form-group" ng-show="ShowPaymentDateLimit">
+                                                <label>Ngày tất toán</label>
+                                                <input type="text" id="dtmPaymentDateLimit"
+                                                       ng-model="PaymentDateLimitDisplay" class="form-control" />
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                <div>
+                                    <div class="widget-body">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <label>
+                                                    Lý do {{ReasonLabel}}
+                                                    <span class="field-validation-valid help-block" data-valmsg-for="FormReason" data-valmsg-replace="true" style="display: inline;"></span>
+                                                </label>
+                                                <textarea type="text" name="FormReason" data-val="true" data-val-required="Vui lòng nhập thông tin" class="form-control" style="height:32px;"
+                                                          ng-model="ObjPayFormAddDetailReq.FormReason"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ghi chú</label>
+                                                <textarea type="text" class="form-control" ng-model="ObjPayFormAddDetailReq.Description" style="height:32px;"></textarea>
+                                            </div>
+                                            <div class="form-group" style="margin-bottom: 7px;">
+                                                <label>&nbsp;</label>
+                                                <div class="smart-form display-inline" style="width:100%;">
+                                                    <div class="input input-file" file-upload root="PnFile1" is-loading="MasterPage.IsLoading">
+                                                        <span class="button">
+                                                            <input class="files" type="file" name="file" accept="{{PnFile1.accept}}">Browse
+                                                        </span>
+                                                        <input type="text" ng-model="PnFile1.LstFile[0].FileName" placeholder="Đính kèm file hình hoặc file pdf" readonly="" style="font-family: Arial,sans-serif; font-size: 13px;">
+                                                        <div class="progress" style="height: 2px;margin-bottom: 0;">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                                                 style="width: {{PnFile1.LstFile[0].Percent}}%;">
+                                                                <span class="sr-only">{{PnFile1.LstFile[0].Percent}}% Complete</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <i class="fa fa-times" style="position: absolute; top: 17%; right: 80px;color:red;cursor:pointer;" title="Xóa file"
+                                                           ng-show="PnFile1.LstFile.length > 0"
+                                                           ng-click="PnFile1.btnClearFile.OnClick();"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="margin-bottom: 7px;">
+                                                <label>&nbsp;</label>
+                                                <div class="smart-form display-inline" style="width:100%;">
+
+                                                    <div class="input input-file" file-upload root="PnFile2" is-loading="MasterPage.IsLoading">
+                                                        <span class="button">
+                                                            <input class="files" type="file" name="file" accept="{{PnFile2.accept}}">Browse
+                                                        </span>
+                                                        <input type="text" ng-model="PnFile2.LstFile[0].FileName" placeholder="Đính kèm file hình hoặc file pdf" readonly="" style="font-family: Arial,sans-serif; font-size: 13px;">
+                                                        <div class="progress" style="height: 2px;margin-bottom: 0;">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                                                 style="width: {{PnFile2.LstFile[0].Percent}}%;">
+                                                                <span class="sr-only">{{PnFile2.LstFile[0].Percent}}% Complete</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <i class="fa fa-times" style="position: absolute; top: 17%; right: 80px;color:red;cursor:pointer;" title="Xóa file"
+                                                           ng-show="PnFile2.LstFile.length > 0"
+                                                           ng-click="PnFile2.btnClearFile.OnClick();"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="margin-bottom: 7px;">
+                                                <label>&nbsp;</label>
+                                                <div class="smart-form display-inline" style="width:100%;">
+                                                    <div class="input input-file" file-upload root="PnFile3" is-loading="MasterPage.IsLoading">
+                                                        <span class="button">
+                                                            <input class="files" type="file" name="file" accept="{{PnFile3.accept}}">Browse
+                                                        </span>
+                                                        <input type="text" ng-model="PnFile3.LstFile[0].FileName" placeholder="Đính kèm file hình hoặc file pdf" readonly="" style="font-family: Arial,sans-serif; font-size: 13px;">
+                                                        <div class="progress" style="height: 2px;margin-bottom: 0;">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                                                 style="width: {{PnFile3.LstFile[0].Percent}}%;">
+                                                                <span class="sr-only">{{PnFile3.LstFile[0].Percent}}% Complete</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <i class="fa fa-times" style="position: absolute; top: 17%; right: 80px;color:red;cursor:pointer;" title="Xóa file"
+                                                           ng-show="PnFile3.LstFile.length > 0"
+                                                           ng-click="PnFile3.btnClearFile.OnClick();"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--button-->
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-primary cc-btn-style" ng-click="btnCreate_OnClick();" style="position: relative; left:-5px;">
+                    <i class="fa fa-plus-circle"></i> Tạo chứng từ
+                </button>
+            </div>
+        </div>
+    </div>
+</div><!--End InputOrderAddController-->
+@section jsScript{
+    <script src="~/script-handler/admin/product-categories/create-controller.js"></script>
+}

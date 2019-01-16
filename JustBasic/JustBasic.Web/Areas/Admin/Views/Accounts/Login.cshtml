@@ -1,0 +1,37 @@
+﻿<div id="content" class="container" style="padding:32px 14px">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 hidden-xs hidden-sm">
+            <h1 class="txt-color-pinkConcung login-header-big" style="font-weight: 400;color:white">Hệ thống việt nam mua sắm</h1>
+            <img src="/Content/bg3.jpg" class="pull-right display-image" alt="" style="width:100%;">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <form name="form" method="post" action="/Accounts/Login" class="smart-form client-form">
+                <div class="well no-padding">
+                    <anti-forgery-token token="model.antiForgery"></anti-forgery-token>
+                    <header style="color:#EA377C;font-weight:bold">
+                        Đăng nhập
+                    </header>
+                    <fieldset>
+                        <section>
+                            <label class="label">Tên đăng nhập</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-user"></i>
+                                <input required name="username" autofocus id="username" type="text" ng-model="model.username" maxlength="100">
+                            </label>
+                        </section>
+                        <section>
+                            <label class="label">Mật khẩu</label>
+                            <label class="input">
+                                <i class="icon-append fa fa-lock"></i>
+                                <input required id="password" name="password" type="password" ng-model="model.password" maxlength="100" autocomplete="off">
+                            </label>
+                        </section>
+                    </fieldset>
+                    <footer>
+                        <button id="btnLogin" class="btn btn-primary" ng-disabled="form.$invalid || invalidCaptcha">Đăng nhập</button>
+                    </footer>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
