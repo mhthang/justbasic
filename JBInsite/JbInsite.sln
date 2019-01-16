@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JbInsite", "JbInsite\JbInsite.csproj", "{8E9D7595-0F96-48F0-8781-24ACAD1272DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JbInsite.Tests", "JbInsite.Tests\JbInsite.Tests.csproj", "{3C0B4C30-5B34-49AF-9276-A05CD4E9E19C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E9D7595-0F96-48F0-8781-24ACAD1272DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9D7595-0F96-48F0-8781-24ACAD1272DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9D7595-0F96-48F0-8781-24ACAD1272DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9D7595-0F96-48F0-8781-24ACAD1272DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C0B4C30-5B34-49AF-9276-A05CD4E9E19C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C0B4C30-5B34-49AF-9276-A05CD4E9E19C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C0B4C30-5B34-49AF-9276-A05CD4E9E19C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C0B4C30-5B34-49AF-9276-A05CD4E9E19C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76FF7975-DF8C-43AC-92E7-D9E8DA3429AB}
+	EndGlobalSection
+EndGlobal
