@@ -1,0 +1,172 @@
+﻿@model JustBasic.Web.Infrastructure.Core.PaginationSet<JustBasic.Web.Models.ProductViewModel>
+
+@{
+    ViewBag.Title = "Tất cả sản phẩm - JustBasic";
+    ViewBag.MetaKeyword = "";
+    ViewBag.MetaDescription = "Tất cả sản phẩm tại JustBasic bao gồm áo khoác, áo thun, sơmi, quần tây, quần jean các loại với những mẫu mã cực chất";
+    Layout = "~/Views/Shared/Layouts.cshtml";
+}
+
+<div id="collection">
+
+    <!-- Begin collection info -->
+    <!-- Content-->
+    <div class="fix-breadcrumb ">
+        <ol class="breadcrumb breadcrumb-arrow hidden-sm hidden-xs">
+            <li><a href="/" target="_self">Trang chủ</a></li>
+
+
+            <li class="active"><span>Tất cả sản phẩm</span></li>
+
+
+        </ol>
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="clearfix filter-box">
+                <div class="browse-tags pull-left">
+                    <span class="hidden">Sắp xếp theo:</span>
+                    <span class="custom-dropdown custom-dropdown--white">
+                        <select class="sort-by custom-dropdown__select custom-dropdown__select--white">
+
+                            <option value="manual">Sản phẩm nổi bật</option>
+
+                            <option value="price-ascending">Giá: Tăng dần</option>
+                            <option value="price-descending">Giá: Giảm dần</option>
+                            <option value="title-ascending">Tên: A-Z</option>
+                            <option value="title-descending">Tên: Z-A</option>
+                            <option value="created-ascending">Cũ nhất</option>
+                            <option value="created-descending">Mới nhất</option>
+                            <option value="best-selling">Bán chạy nhất</option>
+                        </select>
+                    </span>
+                </div>
+                @*<div class="product-filter pull-left">
+                        <span class="filter-title">Lọc theo <i class="fa fa-angle-down"></i></span>
+                        <div class="filter-container">
+                            <div class="clearfix">
+                                <div class="filter-item filter-tag">
+                                    <h4>Phong Cách</h4>
+                                    <ul>
+
+                                        <li data-filter="(tag:product**Bomber)">Bomber</li>
+
+                                        <li data-filter="(tag:product**Khoác Nón)">Khoác Nón</li>
+
+                                        <li data-filter="(tag:product**Khoác Có Cổ)">Khoác Có Cổ</li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="filter-item filter-tag">
+                                    <h4>Chất Liệu</h4>
+                                    <ul>
+
+                                        <li data-filter="(tag:product**Denim)">Denim</li>
+
+                                        <li data-filter="(tag:product**Kaki)">Kaki</li>
+
+                                        <li data-filter="(tag:product**Nỉ)">Nỉ</li>
+
+                                        <li data-filter="(tag:product**Dù)">Dù</li>
+
+                                        <li data-filter="(tag:product**Da Lộn)">Da Lộn</li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="filter-btn text-right">
+                                <a href="javascript:void(0)">Tìm kiếm</a>
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="pull-right showing">
+                    Hiển thị @Model.Items.Count()/@Model.TotalCount Sản phẩm
+                </div>
+            </div>
+            <div class="product-lists clearfix">
+
+
+                @foreach (var product in Model.Items)
+                {
+                    var url = "/" + product.Alias + ".p-" + product.ID + ".html";
+                    <div class="product-item">
+                        <div class="img">
+                            <a href="@url">
+                                <div class="img-show" style="background: url(@product.Image) no-repeat;background-size: cover;background-position: center;"></div>
+                            </a>
+                        </div>
+                        <div class="info">
+                            <h3><a href="@url">@product.Name</a></h3>
+                            <div class="prices">
+                                @if (product.PromotionPrice.HasValue && @product.PromotionPrice > 0)
+                                {
+                                    decimal PromotionProduct = (product.Price - product.PromotionPrice.Value);
+                                    <span>@PromotionProduct.ToString("N0")₫</span>
+                                    <span class="old-price">@product.Price.ToString("N0")₫</span>
+                                }
+                                else
+                                {
+                                    <span>@(product.Price == 0 ? "Liên hệ" : product.Price.ToString("N0"))</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <div class="paginate text-center">
+                @if (Model.TotalPages > 1)
+                {
+                    // Create numeric links
+                    var startPageIndex = Math.Max(1, Model.Page - Model.MaxPage / 2);
+                    var endPageIndex = Math.Min(Model.TotalPages, Model.Page + Model.MaxPage / 2);
+
+                    <div id="pagination">
+                        @if (Model.Page > 1)
+                        {
+
+                            <a href="?page=1" aria-label="First" class="page-node">
+                                <i class="fa fa-angle-double-left"></i>
+                            </a>
+
+
+                            <a href="?page=@(Model.Page-1)" aria-label="Previous" class="page-node">
+                                <i class="fa fa-angle-double-left"></i>
+                            </a>
+
+                        }
+
+                        @for (int i = startPageIndex; i <= endPageIndex; i++)
+                        {
+                            if (Model.Page == i)
+                            {
+                                <a href="?page=@i" title="Trang @i" class="page-node current">@i</a>
+                            }
+                            else
+                            {
+                                <a href="?page=@i" title="Trang @i" class="page-node">@i</a>
+                            }
+                        }
+                        @if (Model.Page < Model.TotalPages)
+                        {
+
+                            <a href="?page=@(Model.Page+1)" aria-label="Next" class="page-node">
+                                <i class="fa fa-angle-double-right"></i>
+                            </a>
+
+                            <a href="?page=@Model.TotalPages" aria-label="Last" class="page-node">
+                                <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- End no products -->
+</div>
+
