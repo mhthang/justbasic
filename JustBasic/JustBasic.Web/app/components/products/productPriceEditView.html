@@ -1,0 +1,103 @@
+﻿  <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Cập nhật giá sản phẩm
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="#">Giá sản phẩm</a></li>
+        <li><a ui-sref="product_prices">Danh sách</a></li>
+        <li class="active">Cập nhật</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+        </div><!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" novalidate name="frmUpdateProduct" role="form" ng-submit="UpdateProductPrice()">
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Sản phẩm</label>
+                    <div class="col-sm-10">
+                        <ui-select ng-model="productPrice.ProductID" name="parentId" theme="bootstrap" style="min-width: 300px;" title="Chọn danh sản phẩm">
+                            <ui-select-match placeholder="Chọn sản phẩm làm giá">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="item.ID as item in products | filter: $select.search">
+                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                <small>
+                                    Tên sản phẩm: {{item.Name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span ng-show="frmUpdateProductPrice.ProductID.$invalid" class="has-error">Phải chọn sản phẩm</span>
+
+                        <input type="hidden" name="productID" ng-model="productPrice.ProductID" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Size</label>
+                    <div class="col-sm-10">
+                        <ui-select ng-model="productPrice.SizeID" name="parentId" theme="bootstrap" style="min-width: 300px;" title="Chọn danh sản phẩm">
+                            <ui-select-match placeholder="Chọn size">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="item.ID as item in sizes | filter: $select.search">
+                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                <small>
+                                    Kích thước : {{item.Name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span ng-show="frmUpdateProductPrice.SizeID.$invalid" class="has-error">Phải chọn size</span>
+
+                        <input type="hidden" name="sizeID" ng-model="productPrice.SizeID" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Color</label>
+                    <div class="col-sm-10">
+                        <ui-select ng-model="productPrice.ColorID" name="parentId" theme="bootstrap" style="min-width: 300px;" title="Chọn danh sản phẩm">
+                            <ui-select-match placeholder="Chọn color">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="item.ID as item in colors | filter: $select.search">
+                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                <small>
+                                    Màu : {{item.Name}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span ng-show="frmUpdateProductPrice.ColorID.$invalid" class="has-error">Phải chọn color</span>
+
+                        <input type="hidden" name="colorID" ng-model="productPrice.ColorID" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Giá bán</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="0" class="form-control" name="SalePrice" ng-model="productPrice.SalePrice">
+                        <span ng-show="frmUpdateProductPrice.SalePrice.$invalid" class="has-error">Phải nhập giá bán</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Giá KM</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="0" class="form-control" name="promotionPrice" ng-model="productPrice.PromotionPrice">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="status" ng-model="productPrice.IsPrimary" ng-checked="productPrice.IsPrimary"> Hiển thị mặc định
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button ui-sref="products" class="btn btn-default">Hủy</button>
+                <button type="submit" ng-disabled="frmUpdateProductPrice.$invalid" class="btn btn-success pull-right">Lưu</button>
+            </div><!-- /.box-footer -->
+        </form>
+    </div><!-- /.box -->
+</section><!-- /.content -->
